@@ -1,19 +1,34 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import api from '../services/api';
 
-function Product(props) {
-  const { navigation } = props;
+export default class Product extends React.Component {
+  
+  componentDidMount()
+  {
+    this.loadProducts();
+  }
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Produto</Text>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Detail')}>
-        <Text style={styles.buttonText}>Go to Detail Screen</Text>
-      </TouchableOpacity>
-    </View>
-  )
+  loadProducts = async () => {
+    const response = await api.get('/products');
+    const {docs} = response.data;
+
+    console.log(docs);
+  };
+
+  render() {
+    const { navigation } = this.props;
+      return (
+        <View style={styles.container}>
+          <Text style={styles.text}>Produto</Text>
+          <TouchableOpacity
+            style={styles.buttonContainer}
+            onPress={() => navigation.navigate('Detail')}>
+            <Text style={styles.buttonText}>Go to Detail Screen</Text>
+          </TouchableOpacity>
+        </View>
+      )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -39,5 +54,3 @@ const styles = StyleSheet.create({
     color: '#fff'
   }
 })
-
-export default Product;
