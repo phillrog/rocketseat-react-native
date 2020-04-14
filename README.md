@@ -5,5 +5,9 @@ Curso Rocketseat React Native
 
 
 # API
-Foi criada no  [repositório](https://github.com/phillrog/rocketseat-nodejs)
-http://app-product-api.herokuapp.com/api/products?page=1
+
+* Foi criada no repositório [rocketseat-nodejs](https://github.com/phillrog/rocketseat-nodejs)
+
+- Request Exemplo: http://app-product-api.herokuapp.com/api/products?page=1
+
+
