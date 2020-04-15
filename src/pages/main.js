@@ -4,7 +4,9 @@ import api from '../services/api';
 
 export default class Product extends React.Component {
   state = {
-    docs: []
+    docs: [],
+    page: 1,
+    productInfo: {}
   };
 
   componentDidMount()
@@ -12,11 +14,16 @@ export default class Product extends React.Component {
     this.loadProducts();
   }
 
-  loadProducts = async () => {
-    const response = await api.get('/products');
-    const {docs} = response.data;
+  loadProducts = async (page = 1) => {
+    const response = await api.get(`/products?page=${page}`);
 
-    this.setState({ docs });
+    const { docs, ...productInfo } = response.data;
+
+    this.setState({ 
+      docs: [... this.state.docs, ... docs], 
+      productInfo, 
+      page 
+    });
   };
 
   renderItem = ({item}) => (
@@ -31,6 +38,16 @@ export default class Product extends React.Component {
     </View>
   );
 
+  loadMore = () => {
+    const { page, productInfo } = this.state;
+
+    if (page === productInfo.pages) return;
+
+    const pageNumber = page + 1;
+
+    this.loadProducts(pageNumber);
+  };
+
   render() {
     const { navigation } = this.props;
       return (
@@ -40,6 +57,8 @@ export default class Product extends React.Component {
           data={this.state.docs}
           renderItem={this.renderItem}
           contentContainerStyle={styles.list}
+          onEndReached={this.loadMore}
+          onEndReachedThreshold={0.1}
          >
          
           </FlatList>
