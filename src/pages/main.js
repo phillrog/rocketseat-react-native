@@ -20,9 +20,14 @@ export default class Product extends React.Component {
   };
 
   renderItem = ({item}) => (
-    <View>
-      <Text>{item.title}</Text>
-      <Text>{item.description}</Text>
+    <View style={styles.productContainer}>
+      <Text style={styles.productTitle}>{item.title}</Text>
+      <Text style={styles.productDescription}>{item.description}</Text>
+      <TouchableOpacity
+       style={styles.productButton}
+       onPress={() => {}}>
+          <Text style={styles.productButtonText}>Acessar</Text>
+       </TouchableOpacity>
     </View>
   );
 
@@ -30,19 +35,20 @@ export default class Product extends React.Component {
     const { navigation } = this.props;
       return (
         <View style={styles.container}>
-          <Text style={styles.text}>Produto</Text>
+         
           <FlatList keyExtractor={item => item._id}
           data={this.state.docs}
           renderItem={this.renderItem}
+          contentContainerStyle={styles.list}
          >
-           <TouchableOpacity onPress={() => {}}></TouchableOpacity>
+         
           </FlatList>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={styles.buttonContainer}
             onPress={() => navigation.navigate('Detail')}>
             <Text style={styles.buttonText}>Go to Detail Screen</Text>
                
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       )
   }
@@ -53,7 +59,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ebebeb'
+    backgroundColor: '#fafafa'
   },
   text: {
     color: '#101010',
@@ -69,5 +75,44 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 20,
     color: '#fff'
+  },
+  list: {
+    padding: 20
+  },
+  productContainer: {
+    backgroundColor: "#fff",
+    borderWidth: 1,
+    borderColor: "#DDD",
+    padding: 20,
+    marginBottom: 20
+  },
+
+  productTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333"
+  },
+
+  productDescription: {
+    fontSize: 16,
+    margin:5,
+    color: "#999",
+    lineHeight: 24
+  },
+  productButton: {
+    height: 42,
+    borderWidth: 2,
+    borderRadius: 5,
+    borderColor: "#DA552F",
+    backgroundColor: "transparent",
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 10
+  },
+
+  productButtonText: {
+    fontSize: 16,
+    color: "#DA552F",
+    fontWeight: "bold"
   }
 })
