@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, FlatList } from 'react-native'
 import api from '../services/api';
 
 export default class Product extends React.Component {
@@ -19,20 +19,29 @@ export default class Product extends React.Component {
     this.setState({ docs });
   };
 
+  renderItem = ({item}) => (
+    <View>
+      <Text>{item.title}</Text>
+      <Text>{item.description}</Text>
+    </View>
+  );
+
   render() {
     const { navigation } = this.props;
       return (
         <View style={styles.container}>
-          <Text style={styles.text}>Produto {this.state.counter}</Text>
+          <Text style={styles.text}>Produto</Text>
+          <FlatList keyExtractor={item => item._id}
+          data={this.state.docs}
+          renderItem={this.renderItem}
+         >
+           <TouchableOpacity onPress={() => {}}></TouchableOpacity>
+          </FlatList>
           <TouchableOpacity
             style={styles.buttonContainer}
             onPress={() => navigation.navigate('Detail')}>
             <Text style={styles.buttonText}>Go to Detail Screen</Text>
-            {
-              this.state.docs.map(product => (
-               <Text key={product._id}>{product.title}</Text>
-              ))
-            }            
+               
           </TouchableOpacity>
         </View>
       )
