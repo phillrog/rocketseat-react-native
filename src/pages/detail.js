@@ -1,18 +1,19 @@
-import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity } from 'react-native'
+import React, {Component} from 'react';
+
+import { StyleSheet, Text, TouchableOpacity } from 'react-native'
+
+import { WebView } from 'react-native-webview';
 
 function Detail(props) {
-  const { navigation } = props;
 
+  const { navigation, route: { params: { product: product } }, route  } = props;
+
+  React.useLayoutEffect(() => {
+    navigation.setOptions({ headerTitle: product.title });
+  }, [navigation, route]);
+  
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>Detalhes do produto</Text>
-      <TouchableOpacity
-        style={styles.buttonContainer}
-        onPress={() => navigation.navigate('Product')}>
-        <Text style={styles.buttonText}>Go to Product Screen</Text>
-      </TouchableOpacity>
-    </View>
+    <WebView source={{uri: product.url}}></WebView>
   )
 }
 

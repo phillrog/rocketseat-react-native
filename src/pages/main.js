@@ -26,17 +26,19 @@ export default class Product extends React.Component {
     });
   };
 
-  renderItem = ({item}) => (
-    <View style={styles.productContainer}>
+  renderItem = ({item}) => {
+    const { navigation } = this.props;
+    
+    return <View style={styles.productContainer}>
       <Text style={styles.productTitle}>{item.title}</Text>
       <Text style={styles.productDescription}>{item.description}</Text>
       <TouchableOpacity
        style={styles.productButton}
-       onPress={() => {}}>
+       onPress={() => {navigation.navigate('Detail', { product: item })}}>
           <Text style={styles.productButtonText}>Acessar</Text>
        </TouchableOpacity>
     </View>
-  );
+  };
 
   loadMore = () => {
     const { page, productInfo } = this.state;
@@ -49,7 +51,7 @@ export default class Product extends React.Component {
   };
 
   render() {
-    const { navigation } = this.props;
+    
       return (
         <View style={styles.container}>
          
@@ -62,12 +64,6 @@ export default class Product extends React.Component {
          >
          
           </FlatList>
-          {/* <TouchableOpacity
-            style={styles.buttonContainer}
-            onPress={() => navigation.navigate('Detail')}>
-            <Text style={styles.buttonText}>Go to Detail Screen</Text>
-               
-          </TouchableOpacity> */}
         </View>
       )
   }
